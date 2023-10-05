@@ -16,13 +16,17 @@ public class GradeBookTest {
 		GradeBook gradebook = new GradeBook();
 		GradeBook gradebookProgramacionOO = new GradeBook("Programacion Orientadan a Objetos");
 		
+		//gradebook.determineClassAverage();
+		gradebookProgramacionOO.determineClassAverage();
 		
+		/*
 		System.out.println("Give a course name: ");
 		String courseName = sc.nextLine();
 		gradebook.setCourseName(courseName);
 		System.out.println("nombre del curso desde el Main() :" + gradebook.getCourseName());
 		System.out.println("nombre del curso con constructor nombre" + gradebookProgramacionOO.getCourseName());
 		gradebook.displayMessage();
+		*/
 	}
 
 }
