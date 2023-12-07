@@ -1,5 +1,10 @@
 package edu.ucaldas.ingenieria.poo.ProyectoCiberseguridad.ui;
 
+
+import edu.ucaldas.ingenieria.poo.ProyectoCiberseguridad.controller.Administrador;
+import edu.ucaldas.ingenieria.poo.ProyectoCiberseguridad.controller.persona;
+import edu.ucaldas.ingenieria.poo.ProyectoCiberseguridad.controller.usuario;
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -25,12 +30,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JDesktopPane;
 import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
+import javax.swing.JPasswordField;
 
 public class Persona extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtApellido;
-	private JTextField txtCedual;
+	private JTextField txtCedula;
 	private JTextField txtemail;
 	private JTextField txtContrasena;
 	
@@ -38,8 +45,8 @@ public class Persona extends JFrame {
 	Connection con = null;
 	PreparedStatement pst = null;
 	private JTextField txtNombre;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtDepartamento;
+	private JPasswordField passwordField;
 
 
 	public static void main(String[] args) {
@@ -68,85 +75,67 @@ public class Persona extends JFrame {
 		studentDetails.setForeground(Color.BLACK);
 		studentDetails.setFont(new Font("Perpetua Titling MT", Font.BOLD, 22));
 		
-		JLabel studentName = new JLabel("Nombres");
-		studentName.setForeground(Color.BLACK);
-		studentName.setFont(new Font("Perpetua Titling MT", Font.BOLD, 14));
+		JLabel lblNombre = new JLabel("Nombres");
+		lblNombre.setForeground(Color.BLACK);
+		lblNombre.setFont(new Font("Perpetua Titling MT", Font.BOLD, 14));
 		
-		JLabel entryNumber = new JLabel("Cedula");
-		entryNumber.setForeground(Color.BLACK);
-		entryNumber.setFont(new Font("Perpetua Titling MT", Font.BOLD, 14));
+		JLabel lblCedula = new JLabel("Cedula");
+		lblCedula.setForeground(Color.BLACK);
+		lblCedula.setFont(new Font("Perpetua Titling MT", Font.BOLD, 14));
 		
-		JLabel emailAddress = new JLabel("Email");
-		emailAddress.setForeground(Color.BLACK);
-		emailAddress.setFont(new Font("Perpetua Titling MT", Font.BOLD, 14));
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setForeground(Color.BLACK);
+		lblEmail.setFont(new Font("Perpetua Titling MT", Font.BOLD, 14));
 		
 		txtApellido = new JTextField();
 		txtApellido.setColumns(10);
 		
-		txtCedual = new JTextField();
-		txtCedual.setColumns(10);
+		txtCedula = new JTextField();
+		txtCedula.setColumns(10);
 		
 		txtemail = new JTextField();
 		txtemail.setColumns(10);
 		
-		JLabel homeCity = new JLabel("Contrasena");
-		homeCity.setForeground(Color.BLACK);
-		homeCity.setFont(new Font("Perpetua Titling MT", Font.BOLD, 14));
+		JLabel lblContrasena = new JLabel("Contrasena");
+		lblContrasena.setForeground(Color.BLACK);
+		lblContrasena.setFont(new Font("Perpetua Titling MT", Font.BOLD, 14));
 		
-		JButton submit = new JButton("Submit");
+		JCheckBox chcEsAdmin = new JCheckBox("EsAdministrador");
+		
+		
+		//Inicio del boton registrar
+		JButton submit = new JButton("Registrar");
 		submit.setForeground(Color.BLACK);
-		submit.addActionListener(new ActionListener() {
+		submit.addActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-			//opcion 1 estructura de datos	
-			String cedula = txtCedual.getText();
-			String nombre = txtNombre.getText();
-			String apelliddo= txtApellido.getText();
+			String nombre = txtNombre.getText() + txtApellido.getText();
+			String cedula = txtCedula.getText();
+			String contrasena = txtContrasena.getText();
 			String email = txtemail.getText();
-			//String direccion=  txtDireccionC.getText();
-			String contrasena = txtContrasena.getText(); 	
-				/*
-				 * Cliente nuevoCliente = new Cliente(); nuevoCliente.registrarUsuario(cedula,
-				 * nombre, apelliddo, email, direccion, contrasena);
-				 * 
-				 * JOptionPane.showConfirmDialog(submit,
-				 * "Ingreso correctamente usuario con nombre: " + nombre + " " +apelliddo);
-				 * 
-				 * ArrayList<Cliente> listadoCliente = new ArrayList<Cliente>();
-				 * listadoCliente.add(nuevoCliente);
-				 */	
-				
-				
-				//Opcion 2: base de datos
-			/*
-				try {
-					String query = "INSERT INTO `student`(`name`, `entrynumber`, `email`, `contactnumber`, `homecity`) VALUES (?, ?, ?, ?, ?)";
-					con = DriverManager.getConnection("jdbc:mysql://localhost/studentmanagementsystem", "root", "");
-					pst=con.prepareStatement(query);
-					pst.setString(1, txtApellido.getText());
-					pst.setString(2, txtCedual.getText());
-					pst.setString(3, txtemail.getText());
-					pst.setString(4, txtDireccionC.getText());
-					pst.setString(5, txtContrasena.getText());
-					if(txtApellido.getText().equals("") || txtCedual.getText().equals("") || txtemail.getText().equals("") || txtDireccionC.getText().equals("") || txtContrasena.getText().equals("")) {
-						JOptionPane.showMessageDialog(null, "Fill all the details :(");
-					}
-					else {
-						pst.executeUpdate();
-						JOptionPane.showMessageDialog(null, "Student added Successfully :)");
-						dispose();
-						Menu menu = new Menu();
-						menu.show();
-					}
-				}
-				catch(Exception ex) {
-					JOptionPane.showMessageDialog(null, ex);
-				}
-				*/
+			String departamento = txtDepartamento.getText();
+			
+			String esAdministrador = chcEsAdmin.getLabel();
+		
+			if (esAdministrador.equals("1"))
+			{
+				Administrador admin = new Administrador(cedula, nombre, departamento, esAdministrador);
 			}
-		});
+			else
+			{
+				usuario user = new usuario(cedula, nombre, email,departamento);
+			}
+			
+		
+			
+			JOptionPane.showConfirmDialog(submit, esAdministrador.equals("1") ? " El admin Fue ingresado correctamente" : " El usuario Fue ingresado correctamente " );
+			
+		}
+		}
+			);
 		submit.setFont(new Font("Tahoma", Font.BOLD, 14));
+		//Fin de boton de registar
+		
 		
 		txtContrasena = new JTextField();
 		txtContrasena.setColumns(10);
@@ -181,16 +170,17 @@ public class Persona extends JFrame {
 		txtNombre = new JTextField();
 		txtNombre.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Area/Departamento");
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		JLabel lblArea = new JLabel("Area/Departamento");
+		lblArea.setFont(new Font("Dialog", Font.BOLD, 14));
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		txtDepartamento = new JTextField();
+		txtDepartamento.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		//JCheckBox chcEsAdmin = new JCheckBox("EsAdministrador");
+		
+		passwordField = new JPasswordField();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -212,33 +202,32 @@ public class Persona extends JFrame {
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 										.addGroup(gl_contentPane.createSequentialGroup()
 											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-												.addComponent(entryNumber)
-												.addComponent(emailAddress)
-												.addComponent(homeCity))
-											.addGap(111))
+												.addComponent(lblCedula)
+												.addComponent(lblEmail)
+												.addComponent(lblContrasena)
+												.addComponent(lblArea))
+											.addGap(50))
 										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-											.addComponent(studentName, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
-											.addComponent(lblApellidos, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
-											.addComponent(lblNewLabel)))))
+											.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lblApellidos, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)))))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 									.addGroup(gl_contentPane.createSequentialGroup()
-										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-											.addComponent(txtemail, 247, 247, 247)
-											.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-												.addComponent(txtCedual, Alignment.LEADING)
-												.addComponent(txtApellido, Alignment.LEADING)
-												.addComponent(txtNombre, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
-											.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addGap(171))
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-										.addComponent(textField, Alignment.LEADING)
-										.addComponent(txtContrasena, Alignment.LEADING, 247, 247, Short.MAX_VALUE)
-										.addComponent(comboBox, Alignment.LEADING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
-									.addGap(128))))
+										.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
+										.addGap(128))
+									.addGroup(gl_contentPane.createSequentialGroup()
+										.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+											.addComponent(txtApellido, Alignment.LEADING)
+											.addComponent(txtemail, Alignment.LEADING, 247, 247, Short.MAX_VALUE)
+											.addComponent(txtCedula, Alignment.LEADING)
+											.addComponent(txtNombre, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+											.addComponent(txtContrasena, Alignment.LEADING)
+											.addComponent(txtDepartamento, Alignment.LEADING)
+											.addComponent(comboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(passwordField, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE))
+										.addGap(171)))
+								.addComponent(chcEsAdmin)))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(182)
 							.addComponent(studentDetails)))
@@ -257,39 +246,35 @@ public class Persona extends JFrame {
 							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(studentName, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(txtApellido, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblApellidos, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+							.addComponent(lblApellidos, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(29)
-									.addComponent(entryNumber))
+									.addComponent(lblCedula))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(32)
-									.addComponent(txtCedual, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)))
+									.addComponent(txtCedula, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)))
 							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(txtemail, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-								.addComponent(emailAddress))
-							.addGap(18)
-							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(17)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(76)
-									.addComponent(lblNewLabel))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(18)
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-										.addComponent(txtContrasena, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-										.addComponent(homeCity))
-									.addGap(18)
-									.addComponent(textField)))
+								.addComponent(lblEmail))
+							.addGap(30)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblContrasena)
+								.addComponent(txtContrasena, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(2)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(txtDepartamento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblArea))
+							.addGap(18)
 							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(32)
+							.addGap(24)
+							.addComponent(chcEsAdmin)
+							.addGap(36)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 								.addComponent(submit, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)))
@@ -298,8 +283,10 @@ public class Persona extends JFrame {
 							.addComponent(desktopPane_3, GroupLayout.PREFERRED_SIZE, 506, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addGap(13)
-					.addComponent(desktopPane_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-					.addGap(6))
+					.addComponent(desktopPane_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(130)
+					.addComponent(txtApellido, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
