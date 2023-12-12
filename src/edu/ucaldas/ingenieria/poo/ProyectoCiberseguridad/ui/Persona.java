@@ -2,7 +2,6 @@ package edu.ucaldas.ingenieria.poo.ProyectoCiberseguridad.ui;
 
 
 import edu.ucaldas.ingenieria.poo.ProyectoCiberseguridad.controller.Administrador;
-import edu.ucaldas.ingenieria.poo.ProyectoCiberseguridad.controller.persona;
 import edu.ucaldas.ingenieria.poo.ProyectoCiberseguridad.controller.usuario;
 
 import java.awt.EventQueue;
@@ -32,6 +31,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
 
 public class Persona extends JFrame {
 
@@ -71,7 +71,7 @@ public class Persona extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JLabel studentDetails = new JLabel("Detalles Persona");
+		JLabel studentDetails = new JLabel("Creacion de Usuarios");
 		studentDetails.setForeground(Color.BLACK);
 		studentDetails.setFont(new Font("Perpetua Titling MT", Font.BOLD, 22));
 		
@@ -195,9 +195,6 @@ public class Persona extends JFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(12)
-									.addComponent(submit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(41)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 										.addGroup(gl_contentPane.createSequentialGroup()
@@ -209,7 +206,10 @@ public class Persona extends JFrame {
 											.addGap(50))
 										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 											.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
-											.addComponent(lblApellidos, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)))))
+											.addComponent(lblApellidos, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE))))
+								.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+									.addGap(12)
+									.addComponent(submit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
